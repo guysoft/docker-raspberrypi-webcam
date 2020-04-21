@@ -1,0 +1,22 @@
+version: '3.6'
+
+services:
+  webcam:
+    # image: guysoft/raspberrypi-webcam
+    build:
+      context: .
+    container_name: webcam
+    tty: true
+    restart: always
+    privileged: true
+    volumes:
+      - /dev/video0:/video
+      - ./motion.conf:/etc/motion/motion.conf:rw
+    ports:
+      - 8081:8081
+      # - 8080:8080
+    dns:
+      - 8.8.8.8
+      - 4.4.4.4
+    entrypoint: sudo motion
+
